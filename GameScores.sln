@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31019.35
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameScores.API", "GameScores.API\GameScores.API.csproj", "{DCD4362B-3315-4242-B010-45A3A2ECE572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameScores.API", "GameScores.API\GameScores.API.csproj", "{DCD4362B-3315-4242-B010-45A3A2ECE572}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameScores.DAL", "GameScores.DAL\GameScores.DAL.csproj", "{A03133CB-0D01-4990-B610-2F694CE11739}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{DCD4362B-3315-4242-B010-45A3A2ECE572}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCD4362B-3315-4242-B010-45A3A2ECE572}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCD4362B-3315-4242-B010-45A3A2ECE572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A03133CB-0D01-4990-B610-2F694CE11739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A03133CB-0D01-4990-B610-2F694CE11739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A03133CB-0D01-4990-B610-2F694CE11739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A03133CB-0D01-4990-B610-2F694CE11739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

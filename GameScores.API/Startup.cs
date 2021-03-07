@@ -1,16 +1,17 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using GameScores.DAL;
+using AutoMapper;
+using GameScores.API.Mappers;
 
 namespace GameScores.API
 {
@@ -26,12 +27,21 @@ namespace GameScores.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddHealthChecks();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GameScores.API", Version = "v1" });
             });
+            services.Configure<DatabaseOptions>(Configuration.GetSection("GameScoresDB"));           
+            services.AddScoped<UserAccountRepository>();
+            services.AddSingleton<IMapper>(new DalRegistry().Register());
+
+
+
+
+            //services.AddScoped<UserAccountAccess>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,10 +60,19 @@ namespace GameScores.API
 
             app.UseAuthorization();
 
+            app.UseHealthChecks("/health", new HealthCheckOptions { ResponseWriter = JsonResponseWriter });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private async Task JsonResponseWriter(HttpContext context, HealthReport report)
+        {
+            context.Response.ContentType = "application/json";
+            await JsonSerializer.SerializeAsync(context.Response.Body, new { Status = report.Status.ToString() },
+                new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
     }
 }
